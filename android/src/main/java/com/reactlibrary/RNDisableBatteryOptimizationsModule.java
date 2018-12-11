@@ -22,7 +22,7 @@ public class RNDisableBatteryOptimizationsModule extends ReactContextBaseJavaMod
 
   @ReactMethod
   public void openBatteryModal() {
-    String packageName = getPackageName();
+    String packageName = reactContext.getPackageName();
     Intent intent = new Intent();
     intent.setAction(Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS);
     intent.setData(Uri.parse("package:" + packageName));
@@ -32,8 +32,8 @@ public class RNDisableBatteryOptimizationsModule extends ReactContextBaseJavaMod
   @ReactMethod
   public void isBatteryOptimizationEnabled(final Promise promise) {
     if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-        String packageName = getPackageName();
-        PowerManager pm = (PowerManager) getSystemService(POWER_SERVICE);
+        String packageName = reactContext.getPackageName();
+        PowerManager pm = (PowerManager) getSystemService(reactContext.POWER_SERVICE);
         if (!pm.isIgnoringBatteryOptimizations(packageName)) {
           promise.resolve(true);
         }
