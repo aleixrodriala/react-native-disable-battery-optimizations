@@ -30,12 +30,13 @@ public class RNDisableBatteryOptimizationsModule extends ReactContextBaseJavaMod
   }
 
   @ReactMethod
-  public void isBatteryOptimizationEnabled(final Promise promise) {
+  public void isBatteryOptimizationEnabled(Promise promise) {
     if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
         String packageName = reactContext.getPackageName();
         PowerManager pm = (PowerManager) reactContext.getSystemService(reactContext.POWER_SERVICE);
         if (!pm.isIgnoringBatteryOptimizations(packageName)) {
           promise.resolve(true);
+          return ;
         }
     }
     promise.resolve(false);
